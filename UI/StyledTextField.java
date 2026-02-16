@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.*;
 
-class StyledPasswordField extends JPasswordField {
-    public StyledPasswordField(int columns) {
+public class StyledTextField extends JTextField {
+    public StyledTextField(int columns) {
         super(columns);
         setFont(new Font("Segoe UI", Font.PLAIN, 14));
         setBorder(BorderFactory.createCompoundBorder(
@@ -19,7 +19,7 @@ class StyledPasswordField extends JPasswordField {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
-        if (getPassword().length == 0 && !isFocusOwner()) {
+        if (getText().isEmpty() && !isFocusOwner()) {
             String placeholder = (String) getClientProperty("JTextField.placeholderText");
             if (placeholder != null) {
                 Graphics2D g2 = (Graphics2D) g.create();

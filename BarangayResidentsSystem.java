@@ -1,42 +1,54 @@
 import javax.swing.*;
 import java.awt.*;
-import UI.DashboardPanel;
-import UI.ResidentManagementPanel;
-import UI.UserManagementPanel;
-import UI.AccountSettingsPanel;
+import UI.*;
+import user_management.*;
+import java.util.List;
 
-public class BarangayResidentsSystem extends JFrame {
-
-    private CardLayout cardLayout;
+public class BarangayResidentsSystem {
+    private JFrame frame;
     private JPanel mainPanel;
-
+    private CardLayout cardLayout;
+    private User currentUser;
+    private List<Resident> residents;
+    private List<User> users;
+    
+    private LoginPanel loginPanel;
+    private OTPScreen otpScreen;
+    private MainDashboard dashboard;
+    
     public BarangayResidentsSystem() {
-        setTitle("Barangay Residents Information System");
-        setSize(1200, 700);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
+        initializeData();
+        initializeUI();
+    }
+    
+    private void initializeData() {
+        residents = SecureFileHandler.loadResidents();
+        users = SecureFileHandler.loadUsers();
+    }
+    
+    private void initializeUI() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        frame = new JFrame("Barangay Residents Record System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1200, 700);
+        frame.setLocationRelativeTo(null);
+        
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
-
-        DashboardPanel dashboardPanel = new DashboardPanel();
-        ResidentManagementPanel residentPanel = new ResidentManagementPanel();
-        UserManagementPanel userPanel = new UserManagementPanel();
-        AccountSettingsPanel accountPanel = new AccountSettingsPanel();
-
-        mainPanel.add(dashboardPanel, "Dashboard");
-        mainPanel.add(residentPanel, "Residents");
-        mainPanel.add(userPanel, "Users");
-        mainPanel.add(accountPanel, "Account");
-
-        add(mainPanel);
-
-        setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new BarangayResidentsSystem();
-        });
+        mainPanel.setBackground(BarangayColors.LIGHT_BACKGROUND);
+        
+        loginPanel = new LoginPanel();
+        otpScreen = new OTPScreen();
+        
+        mainPanel.add(loginPanel, "LOGIN");
+        mainPanel.add(otpScreen, "OTP");
+        
+        frame.add(mainPanel);
+        frame.setVisible(true);
     }
 }
