@@ -10,8 +10,12 @@ public class HouseholdMember {
     private LocalDate dateofBirth;
     private String civilStatus;
 
-    public HouseholdMember(String lastName, String firstName, String qualifier, 
-                            LocalDate dateofBirth, String civilStatus){
+    public HouseholdMember(
+        String lastName, 
+        String firstName, 
+        String qualifier, 
+        LocalDate dateofBirth, 
+        String civilStatus){
         
         this.lastName = lastName;
         this.firstName = firstName;

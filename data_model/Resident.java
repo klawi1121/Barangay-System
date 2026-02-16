@@ -36,11 +36,25 @@ public class Resident {
     private LocalDateTime deceasedAt;
     private List<HouseholdMember> householdMembers;
 
-    public Resident(int residentID, String lastName, String firstName, String middleName, String suffix,
-                     LocalDate dateofBirth, String sex, String medicalCondition,
-                   int incomeBracket, String motherTongue, String religion,
-                   String employment, String maritalStatus, String address,
-                   String position, String contactNumber, String occupation) {
+    public Resident(
+        int residentID, 
+        String lastName, 
+        String firstName, 
+        String middleName, 
+        String suffix,
+        LocalDate dateofBirth, 
+        String sex, 
+        String medicalCondition,
+        int incomeBracket, 
+        String motherTongue, 
+        String religion,
+        String employment, 
+        String maritalStatus, 
+        String address,
+        String position, 
+        String contactNumber, 
+        String occupation
+    ) {
             this.residentID = residentID;
             this.lastName = lastName;
             this.firstName = firstName;

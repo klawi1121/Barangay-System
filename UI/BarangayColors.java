@@ -3,7 +3,7 @@ package UI;
 import java.awt.Color;
 
 // ==================== COLOR CONSTANTS ====================
-class BarangayColors {
+public class BarangayColors {
     public static final Color PRIMARY_BLUE = new Color(47, 93, 138);
     public static final Color ACCENT_ORANGE = new Color(230, 126, 34);
     public static final Color LIGHT_BACKGROUND = new Color(245, 246, 247);

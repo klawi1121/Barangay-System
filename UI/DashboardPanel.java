@@ -8,7 +8,7 @@ public class DashboardPanel extends JPanel {
     public DashboardPanel() {
 
         setLayout(new BorderLayout());
-        setBackground(BarangayColors.LIGHT);
+        setBackground(BarangayColors.LIGHT_BACKGROUND);
 
         JLabel titleLabel = new JLabel("Dashboard");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
@@ -18,7 +18,7 @@ public class DashboardPanel extends JPanel {
         add(titleLabel, BorderLayout.NORTH);
 
         JPanel centerPanel = new JPanel();
-        centerPanel.setBackground(BarangayColors.LIGHT);
+        centerPanel.setBackground(BarangayColors.LIGHT_BACKGROUND);
         centerPanel.setLayout(new GridLayout(2, 2, 20, 20));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
 

@@ -1,7 +1,23 @@
 package UI;
 
-import UI.*;
-import user_management.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
+import data_storage_security.SecureFileHandler;
+import user_management.User;
+
 
 public class UserManagementPanel extends JPanel {        
         private User panelUser;

@@ -3,7 +3,7 @@ package user_management;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 
-public class User {
+public abstract class User {
 
     public enum UserRole {
         ADMIN,
@@ -54,4 +54,6 @@ public class User {
     public String getPhone() { return phone; }
     public boolean isActive() { return isActive; }
     public void setActive(boolean active) { isActive = active; }
+    public String getEncryptedPassword() { return encryptedPassword; }
+    public void setEncryptedPassword(String encryptedPassword) { this.encryptedPassword = encryptedPassword; }
 }
