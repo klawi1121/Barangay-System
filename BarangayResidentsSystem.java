@@ -52,10 +52,9 @@ public class BarangayResidentsSystem {
         mainPanel.setBackground(BarangayColors.LIGHT_BACKGROUND);
 
         // LoginPanel mo currently default constructor pa, so di natin gagalawin
-        loginPanel = new LoginPanel(frame, users);
-
-        // IMPORTANT: updated OTPScreen constructor
         otpScreen = new OTPScreen(cardLayout, mainPanel, residents, users);
+
+        loginPanel = new LoginPanel(frame, mainPanel, cardLayout, otpScreen, users, residents);
 
         mainPanel.add(loginPanel, "LOGIN");
         mainPanel.add(otpScreen, "OTP");

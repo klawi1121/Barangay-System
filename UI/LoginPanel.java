@@ -7,11 +7,17 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.util.List;
+import data_model.Resident;
 
 public class LoginPanel extends JPanel {
 
     private final JFrame frame;
+    private final JPanel mainPanel;
+    private final CardLayout cardLayout;
+    private final OTPScreen otpScreen;
+
     private final List<User> users;
+    private final List<Resident> residents;
 
     private StyledTextField usernameField;
     private StyledPasswordField passwordField;
@@ -19,9 +25,15 @@ public class LoginPanel extends JPanel {
 
     private User currentUser;
 
-    public LoginPanel(JFrame frame, List<User> users) {
+    public LoginPanel(JFrame frame, JPanel mainPanel, CardLayout cardLayout,
+            OTPScreen otpScreen, List<User> users, List<Resident> residents) {
+
         this.frame = frame;
+        this.mainPanel = mainPanel;
+        this.cardLayout = cardLayout;
+        this.otpScreen = otpScreen;
         this.users = users;
+        this.residents = residents;
 
         setLayout(new GridBagLayout());
         setBackground(BarangayColors.LIGHT_BACKGROUND);
@@ -95,7 +107,7 @@ public class LoginPanel extends JPanel {
 
         gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        roleComboBox = new StyledComboBox<>(new String[]{"ADMIN", "STAFF", "RESIDENT"});
+        roleComboBox = new StyledComboBox<>(new String[] { "ADMIN", "STAFF", "RESIDENT" });
         cardPanel.add(roleComboBox, gbc);
 
         gbc.gridy = 4;
@@ -149,8 +161,25 @@ public class LoginPanel extends JPanel {
                         "Login successful! Role: " + user.getRole(),
                         "Success", JOptionPane.INFORMATION_MESSAGE);
 
-                // TODO: Navigate to dashboard using your CardLayout/AppFrames
+                // ADMIN -> OTP then dashboard
+                if (user instanceof Admin) {
+                    Admin admin = (Admin) user;
+                    String otp = admin.generateOTP();
+                    otpScreen.setOTP(otp, admin, user);
+                    cardLayout.show(mainPanel, "OTP");
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
+                    return;
+                }
+
+                // STAFF/RESIDENT -> direct dashboard
+                MainDashboard dashboard = new MainDashboard(user, residents, users);
+                mainPanel.add(dashboard, "DASHBOARD");
+                cardLayout.show(mainPanel, "DASHBOARD");
+                mainPanel.revalidate();
+                mainPanel.repaint();
                 return;
+
             }
         }
 
@@ -205,7 +234,7 @@ public class LoginPanel extends JPanel {
         formPanel.add(phoneField);
 
         formPanel.add(new JLabel("Role:"));
-        StyledComboBox<String> roleBox = new StyledComboBox<>(new String[]{"RESIDENT", "STAFF"});
+        StyledComboBox<String> roleBox = new StyledComboBox<>(new String[] { "RESIDENT", "STAFF" });
         formPanel.add(roleBox);
 
         formPanel.add(new JLabel("Resident ID:"));
@@ -309,7 +338,8 @@ public class LoginPanel extends JPanel {
     }
 
     private boolean isValidPhoneNumber(String phone) {
-        if (phone == null || phone.trim().isEmpty()) return false;
+        if (phone == null || phone.trim().isEmpty())
+            return false;
         phone = phone.trim().replaceAll("[\\s-]", "");
         return phone.matches("^09\\d{9}$") || phone.matches("^\\+63\\d{10}$");
     }

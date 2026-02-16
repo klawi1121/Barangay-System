@@ -38,15 +38,15 @@ public class OTPScreen extends JPanel {
         otpPanel.setBackground(Color.WHITE);
         otpPanel.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(BarangayColors.BORDER_COLOR, 1),
-                BorderFactory.createEmptyBorder(40, 50, 40, 50)
-        ));
+                BorderFactory.createEmptyBorder(40, 50, 40, 50)));
 
         JLabel titleLabel = new JLabel("Two-Factor Authentication");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
         titleLabel.setForeground(BarangayColors.PRIMARY_BLUE);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        otpLabel = new JLabel("<html><div style='text-align: center;'>OTP has been generated.<br>Check your email/phone.</div></html>");
+        otpLabel = new JLabel(
+                "<html><div style='text-align: center;'>OTP has been generated.<br>Valid for 5 minutes</div></html>");
         otpLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         otpLabel.setForeground(BarangayColors.TEXT_COLOR);
         otpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -105,11 +105,14 @@ public class OTPScreen extends JPanel {
         add(otpPanel);
     }
 
+    // DEV: show OTP on screen
     public void setOTP(String otp, Admin admin, User currentUser) {
         this.admin = admin;
         this.currentUser = currentUser;
 
-        otpLabel.setText("<html><div style='text-align: center;'>OTP Generated.<br>Valid for 5 minutes</div></html>");
+        otpLabel.setText("<html><div style='text-align: center;'>OTP Generated: <b>"
+                + otp + "</b><br>Valid for 5 minutes</div></html>");
+
         otpField.setText("");
         otpField.requestFocus();
     }
@@ -133,10 +136,15 @@ public class OTPScreen extends JPanel {
     }
 
     private void resendOTP() {
-        if (admin == null) return;
+        if (admin == null)
+            return;
 
         String newOTP = admin.generateOTP();
-        otpLabel.setText("<html><div style='text-align: center;'>OTP Resent.<br>Valid for 5 minutes</div></html>");
+
+        // DEV: show new OTP too
+        otpLabel.setText("<html><div style='text-align: center;'>OTP Resent: <b>"
+                + newOTP + "</b><br>Valid for 5 minutes</div></html>");
+
         otpField.setText("");
         otpField.requestFocus();
 
