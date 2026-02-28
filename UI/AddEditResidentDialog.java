@@ -25,7 +25,7 @@ public class AddEditResidentDialog {
             motherTongueField, religionField, maritalStatusField,
             addressField, positionField, contactField,
             occupationField;
-    private StyledComboBox<String> sexComboBox, incomeComboBox, employmentComboBox;
+    private StyledComboBox<String> sexComboBox, incomeComboBox, employmentComboBox, maritalStatusComboBox, religionComboBox;
 
     // Household Members
     private DefaultTableModel memberTableModel;
@@ -103,11 +103,11 @@ public class AddEditResidentDialog {
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.anchor = GridBagConstraints.EAST;
-        formPanel.add(new JLabel("Middle Initial:"), gbc);
+        formPanel.add(new JLabel("Middle Name:"), gbc);
         gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.WEST;
         mInitialField = new StyledTextField(5);
-        mInitialField.putClientProperty("JTextField.placeholderText", "M.I.");
+        mInitialField.putClientProperty("JTextField.placeholderText", "Enter middle name");
         if (existingResident != null)
             mInitialField.setText(
                     existingResident.getMiddleName() != null ? existingResident.getMiddleName() : "");
@@ -214,11 +214,12 @@ public class AddEditResidentDialog {
         formPanel.add(new JLabel("Civil Status*:"), gbc);
         gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        maritalStatusField = new StyledTextField(15);
-        maritalStatusField.putClientProperty("JTextField.placeholderText", "Single, Married, Widowed, etc.");
-        if (existingResident != null)
-            maritalStatusField.setText(existingResident.getMaritalStatus());
-        formPanel.add(maritalStatusField, gbc);
+        String[] maritalStatusOptions = { "Select Civil Status", "Sigle", "Married", "Divorced", "Widowed", "Seperated", "Partner" };
+        maritalStatusComboBox = new StyledComboBox<>(maritalStatusOptions);
+        if (existingResident != null){
+            maritalStatusComboBox.setSelectedItem(existingResident.getMaritalStatus());
+        }
+        formPanel.add(maritalStatusComboBox, gbc);
         row++;
 
         // Medical Condition
@@ -287,11 +288,14 @@ public class AddEditResidentDialog {
         formPanel.add(new JLabel("Religion:"), gbc);
         gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        religionField = new StyledTextField(15);
-        religionField.putClientProperty("JTextField.placeholderText", "e.g., Catholic, Muslim");
-        if (existingResident != null)
-            religionField.setText(existingResident.getReligion());
-        formPanel.add(religionField, gbc);
+        String[] religionOptions = { "Select Religion", "Roman Catholic", "Jehova's Witness", "Buddhist", "Members Church of God International",
+                                    "Atheist", "Muslim", "Born Again", "Baptist", "Mormons", "Free methodist", "Christian", "Protestant", "Aglipay",
+                                "Islam", "LDS", "Seventh Day Adventist", "Iglesia ni Cristo", "Adventist", "N/A"};
+        religionComboBox = new StyledComboBox<>(religionOptions);
+        if (existingResident != null){
+            religionComboBox.setSelectedItem(existingResident.getReligion());
+        }
+        formPanel.add(religionComboBox, gbc);
         row++;
 
         // Employment Dropdown
